@@ -1,0 +1,33 @@
+.form-container {
+    padding: $padding-s;
+}
+
+.form {
+    > div {
+        margin-bottom: $margin-m;
+    }
+}
+
+label {
+    display: block;
+    padding-left: $padding-s;
+    font-size: 1.125em;
+}
+
+input {
+    display: block;
+    width: 90%;
+    margin: $padding-s;
+
+    border: 0;
+    border-bottom: 1px solid $blue-2;
+    background: transparent;
+
+    font-family: Cairo, sans-serif;
+
+    font-size: 1em;
+
+    &:focus {
+        outline: $blue-2;
+    }
+}

@@ -1,0 +1,47 @@
+.scroll-list {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.page {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+}
+
+.tile-list {
+    width: 100%;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.tile {
+    margin: 10px;
+    border: 1px solid dimgrey;
+}
+
+.tile-s {
+    width: 50%;
+    height: 50vw;
+}
+
+.tile-m {
+    width: 100%;
+    height: 50vw;
+}
+
+
+.tile-l {
+    width: 100%;
+    height: calc(2 * 50vw)
+}

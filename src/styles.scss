@@ -1,0 +1,135 @@
+//@import '~@angular/cdk/overlay-prebuilt.css';
+
+@import "styles/colors";
+@import "styles/typography";
+@import "styles/spacer";
+@import "styles/variables";
+
+// components
+@import "styles/components/overlay";
+@import "styles/components/card";
+@import "styles/components/forms";
+
+html, body {
+    height: 100%;
+    background: $bg;
+}
+
+body {
+    margin: 0;
+    font-family: $type-capital;
+    font-weight: 400;
+
+    overscroll-behavior: contain;
+}
+
+* {
+    color: white;
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.center-contents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-contents-v {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.center-contents-h {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.right-align-contents {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.left-align-contents {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.inflate {
+    width: 100%;
+    height: 100%;
+}
+
+.inflate-h {
+    width: 100%;
+}
+
+.inflate-v {
+    height: 100%;
+}
+
+.container-debug {
+    border: 1px solid crimson;
+}
+
+.noselect {
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+.popover-backdrop {
+    background: rgba(0, 0, 0, 0.61);
+}
+
+h1 {
+    font-size: 1.8em;
+    font-family: $type-capital;
+    text-transform: uppercase;
+    font-weight: 200;
+    padding: 0 $padding-m;
+}
+
+
+// timer display class
+
+.title {
+    font-size: 1.6em;
+    text-overflow: ellipsis;
+    font-weight: 300 !important;
+}
+
+.round-btn {
+    height: 48px;
+    width: 48px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    border: 0;
+
+    background: $bg-shade-3;
+
+    &:active {
+        background: blue;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}

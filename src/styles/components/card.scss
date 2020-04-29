@@ -1,0 +1,35 @@
+@import "../spacer";
+@import "../typography";
+
+.card {
+    padding: $padding-m;
+    background: $bg-shade-1;
+    border-radius: 3px;
+}
+
+.card-header {
+    padding: $padding-m 0;
+    position: relative;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .title {
+        width: 100%;
+        font-family: $type-capital;
+        font-size: 1.125em;
+        text-transform: uppercase;
+        flex-grow: 1;
+
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .action {
+        position: absolute;
+        top: calc(50% - 18px);
+        right: 0;
+    }
+}

@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Taviraj&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fira+Code&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cairo:300,400&display=swap');
+
+@import "colors";
+
+$type-serif: 'Taviraj', serif;
+$type-mono: 'Fira Code', monospace;
+$type-capital: 'Cairo', sans-serif;
+
+.type-serif {
+    font-family: 'Taviraj', serif;
+}
+
+.type-mono {
+    font-family: $type-mono;
+}
+
+.type-regular {
+    font-family: $type-capital;
+    font-weight: 500;
+}
+
+.type-capital {
+    font-family: $type-capital;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.type-muted-1 {
+    color: $type-muted-1;
+}
