@@ -8,6 +8,8 @@ import {SocketService} from "../socket.service";
 })
 export class DashboardComponent implements OnInit {
 
+    states = {}
+
     constructor(private socket: SocketService) {
     }
 
@@ -17,6 +19,7 @@ export class DashboardComponent implements OnInit {
 
         this.socket.onMessage.subscribe(
             (message) => {
+
                 console.log('message', message);
             }
         )
