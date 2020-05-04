@@ -1,0 +1,15 @@
+@import "../../styles";
+
+.slider-container {
+    position: relative;
+    background: $bg-shade-2;
+    border-radius: 10px;
+}
+
+.knob {
+    position: absolute;
+    height: 28px;
+    width: calc(100%);
+    border-radius: 10px;
+    background: $bg-shade-4;
+}

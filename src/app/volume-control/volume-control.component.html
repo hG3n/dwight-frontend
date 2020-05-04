@@ -1,0 +1,15 @@
+<div class="volume-buttons inflate" fxLayout="column" fxLayoutAlign=" end">
+    <!--     [@flip]="volumeSliderAnimState"-->
+    <!--     (@flip.done)="animationDone($event)">-->
+    <button fxFlex="35" class="up" (click)="onVolumeIncrease.emit()">
+        <i class="material-icons"> volume_up </i>
+    </button>
+
+    <div fxFlex="30" class="val center-contents type-mono">
+        {{value}}
+    </div>
+
+    <button fxFlex="35" class="down" (click)="onVolumeDecrease.emit()">
+        <i class="material-icons"> volume_down </i>
+    </button>
+</div>

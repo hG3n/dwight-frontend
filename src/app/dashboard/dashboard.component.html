@@ -1,24 +1,97 @@
 <div class="scroll-list inflate">
-    <div class="page">
-        <div fxLayout="row">
-            <div fxFlex="grow">
-                <h1>Main</h1>
+
+    <div class="page" fxLayout="column">
+
+        <div fxFlex="20"></div>
+
+        <div class="m-b-x" fxFlex fxLayout="row">
+            <div class="p-t-x" fxLayout="column" fxLayoutAlign=" start">
+                <button class="round-btn" (click)="loadDefaultEq()">
+                    <i class="material-icons">equalizer</i>
+                </button>
             </div>
-            <div>
+
+            <div fxFlex="grow" fxLayout="column" fxLayoutAlign=" center">
+                <h1 class="heading">Main</h1>
+                <button class="round-btn big m-b-x" (click)="toggleZonePwr(0)">
+                    <i class="material-icons"
+                       [ngClass]="{online: states.power.main, offline: !states.power.main}">
+                        power_settings_new
+                    </i>
+                </button>
+                <button class="round-btn" (click)="toggleMute(0)">
+                    <i class="material-icons">
+                        volume_mute
+                    </i>
+                </button>
             </div>
+
+            <div fxLayout="column" class="p-t-x">
+
+                <div class="volume-interface">
+                    <ng-template [cdkPortalOutlet]="selectedPortal" (attached)="onComponentAttached($event)"></ng-template>
+                </div>
+
+
+                <div class="m-t-m center-contents">
+                    <button class="round-btn small" (click)="changeVolumeMode()"><i class="material-icons">tune</i></button>
+                </div>
+            </div>
+
         </div>
-        <div class="tile-list">
-            <div class="tile tile-s">
-                <div class="inflate" (click)="toggleMain()">toggle</div>
-            </div>
+
+        <div class="control-buttons" fxFlex="72px" fxLayout="">
+            <button class="center-contents type-capital" fxFlex="33"
+                    *ngFor="let mode of listeningModes"
+                    (click)="setListeningMode(mode.tag)"
+                    [ngClass]="{active: states.listeningMode === mode.tag}">
+                {{mode.title.toUpperCase()}}
+            </button>
         </div>
+
+        <div fxFlex="grow" fxLayout="row"></div>
+
+
     </div>
-    <div class="page">
-        <h1>Zone 2</h1>
-        <div class="tile-list">
-            <div class="tile tile-s">
-                <div class="inflate" (click)="toggleZone2()"> toggle</div>
+
+    <div class="page" fxLayout="column">
+
+        <div fxFlex="20"></div>
+
+        <div fxFlex="grow" fxLayout="row">
+            <div class="p-t-l" fxFlex="33" fxLayout="column" fxLayoutAlign=" center">
+                <button class="round-btn" (click)="loadDefaultEq()">
+                    <i class="material-icons">equalizer</i>
+                </button>
             </div>
+
+            <div fxFlex="33" fxLayout="column" fxLayoutAlign=" center">
+                <h1>Zone 2</h1>
+                <button class="round-btn big" (click)="toggleZonePwr(1)">
+                    <i class="material-icons"
+                       [ngClass]="{online: states.power.zone2, offline: !states.power.zone2}">
+                        power_settings_new
+                    </i>
+                </button>
+            </div>
+
+            <div class="p-t-l volume-buttons"
+                 fxFlex="33" fxLayout="column" fxLayoutAlign=" center">
+
+                <button class="up" (click)="increaseVolume(1)">
+                    <i class="material-icons"> volume_up </i>
+                </button>
+
+                <div class="val center-contents">
+                    {{states.volume.zone2}}
+                </div>
+
+                <button class="down" (click)="decreaseVolume(1)">
+                    <i class="material-icons"> volume_down </i>
+                </button>
+            </div>
+
         </div>
+
+        <div fxFlex="20"></div>
     </div>
-</div>

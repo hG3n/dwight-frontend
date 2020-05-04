@@ -1,0 +1,7 @@
+<div #container class="slider-container inflate">
+    <div #scale class="scale"></div>
+    <div #knob class="knob"
+         (panstart)="panStart($event)"
+         (pan)="pan($event)"
+         (panend)="panEnd($event)"></div>
+</div>

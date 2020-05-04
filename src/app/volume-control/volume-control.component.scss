@@ -1,0 +1,42 @@
+@import "../../styles/spacer";
+@import "../../styles/colors";
+
+.volume-buttons {
+
+    .up {
+        width: 100%;
+        border-top: 1px solid $bg-shade-2;
+        border-bottom: 0;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+        &:active {
+            background: $bg-shade-3;
+        }
+    }
+
+    .down {
+        width: 100%;
+        border-top: 0;
+        border-bottom: 1px solid $bg-shade-2;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+
+        &:active {
+            background: $bg-shade-3;
+        }
+    }
+
+    > button, div {
+        width: 100%;
+        border-top: 1px solid $bg-shade-1;
+        border-bottom: 1px solid $bg-shade-1;
+        border-left: 1px solid $bg-shade-2;
+        border-right: 1px solid $bg-shade-2;
+        background: $bg-shade-2;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

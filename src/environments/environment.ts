@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     api: {
-        baseUrl: 'http://0.0.0.0:42001'
+        baseUrl: 'ws://0.0.0.0:42001'
     }
 };
 
