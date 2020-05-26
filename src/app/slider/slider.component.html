@@ -1,7 +1,10 @@
-<div #container class="slider-container inflate">
+<div #container class="slider-container inflate"
+     [@flip]="animationState"
+     (@flip.done)="onAnimationDone($event)">
     <div #scale class="scale"></div>
     <div #knob class="knob"
-         (panstart)="panStart($event)"
-         (pan)="pan($event)"
-         (panend)="panEnd($event)"></div>
+         cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".slider-container"
+         (cdkDragStarted)="panStart($event)"
+         (cdkDragMoved)="pan($event)"
+         (cdkDragEnded)="panEnd($event)"></div>
 </div>

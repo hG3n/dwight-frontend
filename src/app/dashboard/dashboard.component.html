@@ -19,7 +19,7 @@
                         power_settings_new
                     </i>
                 </button>
-                <button class="round-btn" (click)="toggleMute(0)">
+                <button class="round-btn" (click)="toggleMute(0)" [disabled]="states.mute.main">
                     <i class="material-icons">
                         volume_mute
                     </i>
@@ -32,9 +32,25 @@
                     <ng-template [cdkPortalOutlet]="selectedPortal" (attached)="onComponentAttached($event)"></ng-template>
                 </div>
 
+                <ng-template>
+                    <app-slider [(value)]="rawVolumes.main"
+                                [updateRate]="15"
+                                [knobHeight]="24"
+                                [sliderRange]="[0, 124]"
+                                (valueChange)="sliderChange($event)">
+                    </app-slider>
+                </ng-template>
+                <ng-template>
+                    <app-volume-control
+                        [value]="states.volume.main"
+                        (onVolumeDecrease)="decreaseVolume(0)"
+                        (onVolumeIncrease)="increaseVolume(0)">
+                    </app-volume-control>
+                </ng-template>
+
 
                 <div class="m-t-m center-contents">
-                    <button class="round-btn small" (click)="changeVolumeMode()"><i class="material-icons">tune</i></button>
+                    <button class="round-btn small" (click)="initVolumeModeChange()"><i class="material-icons">tune</i></button>
                 </div>
             </div>
 
@@ -75,23 +91,36 @@
                 </button>
             </div>
 
-            <div class="p-t-l volume-buttons"
-                 fxFlex="33" fxLayout="column" fxLayoutAlign=" center">
+            <!--            <div fxLayout="column" class="p-t-x">-->
 
-                <button class="up" (click)="increaseVolume(1)">
-                    <i class="material-icons"> volume_up </i>
-                </button>
+            <!--                <div class="volume-interface">-->
+            <!--                    <ng-template [cdkPortalOutlet]="selectedPortal" (attached)="onComponentAttached($event)"></ng-template>-->
+            <!--                </div>-->
 
-                <div class="val center-contents">
-                    {{states.volume.zone2}}
-                </div>
+            <!--                <ng-template>-->
+            <!--                    <app-slider [(value)]="rawVolumes.zone2"-->
+            <!--                                [updateRate]="15"-->
+            <!--                                [knobHeight]="24"-->
+            <!--                                [sliderRange]="[0, 124]"-->
+            <!--                                (valueChange)="sliderChange($event)">-->
+            <!--                    </app-slider>-->
+            <!--                </ng-template>-->
+            <!--                <ng-template>-->
+            <!--                    <app-volume-control-->
+            <!--                        [value]="states.volume.zone2"-->
+            <!--                        (onVolumeDecrease)="decreaseVolume(1)"-->
+            <!--                        (onVolumeIncrease)="increaseVolume(1)">-->
+            <!--                    </app-volume-control>-->
+            <!--                </ng-template>-->
 
-                <button class="down" (click)="decreaseVolume(1)">
-                    <i class="material-icons"> volume_down </i>
-                </button>
-            </div>
+
+            <!--                <div class="m-t-m center-contents">-->
+            <!--                    <button class="round-btn small" (click)="changeVolumeMode()"><i class="material-icons">tune</i></button>-->
+            <!--                </div>-->
+            <!--            </div>-->
 
         </div>
 
         <div fxFlex="20"></div>
     </div>
+</div>

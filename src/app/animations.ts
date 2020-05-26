@@ -87,15 +87,22 @@ export const switchAnimation: {
     readonly flip: AnimationTriggerMetadata;
 } = {
     flip: trigger('flip', [
-        state('flipped', style({transform: `rotate3d(0,1,0, 90deg)`, visibility: 'hidden'})),
-        transition("* => flipped", [
-            animate('500ms ease-out',
+        state('none', style({})),
+        state('flippedOut', style({transform: `rotate3d(0,1,0, -90deg)`})),
+        state('flipped', style({transform: `rotate3d(0,1,0, 90deg)`})),
+        transition("none => flipped", [
+            animate('100ms ease-out',
                 style({transform: 'rotate3d(0,1,0, 90deg)'})
             )
         ]),
-        transition("* => *", [
-            animate('500ms ease-out',
-                style({transform: 'rotate3d(0,1,0, 0deg)'})
+        transition("flipped => none", [
+            animate('100ms ease-out',
+                style({transform: 'rotate3d(0,-1,0, 0deg)'})
+            )
+        ]),
+        transition("flippedOut => none", [
+            animate('100ms ease-out',
+                style({transform: 'rotate3d(0,-1,0, 0deg)'})
             )
         ])
     ])

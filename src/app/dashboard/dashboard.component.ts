@@ -1,4 +1,4 @@
-import {Component, ComponentRef, OnInit, Renderer2} from '@angular/core';
+import {Component, ComponentRef, OnInit, Renderer2, TemplateRef, ViewChild} from '@angular/core';
 import {SocketService} from "../socket.service";
 import {timer} from "rxjs";
 import {BaseComponent} from "../base-component";
@@ -18,6 +18,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     states = {
         power: {main: false, zone2: false},
         volume: {main: '0', zone2: '0'},
+        mute: {main: false},
         listeningMode: 'none'
     }
 
@@ -33,7 +34,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         {title: 'dolby', tag: 'dolby'},
     ]
 
-    showVolumeSlider = false;
+    showVolumeSlider = false
     volumeSliderAnimState = '';
 
     selectedPortal: Portal<any>;
@@ -41,6 +42,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     volumeControlPortal: ComponentPortal<VolumeControlComponent>;
     volumeSliderPortal: ComponentPortal<SliderComponent>;
 
+    private currentViewRef = null;
 
     constructor(private socket: SocketService,
                 protected renderer: Renderer2) {
@@ -51,31 +53,34 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.volumeControlPortal = new ComponentPortal(VolumeControlComponent);
         this.volumeSliderPortal = new ComponentPortal(SliderComponent);
 
-        this.selectedPortal = this.volumeSliderPortal;
+        // this.selectedPortal = this.volumeSliderPortal;
+        this.selectedPortal = this.volumeControlPortal;
 
         this.initSockets();
         this.initStatusUpdate();
     }
 
     onComponentAttached(ref): void {
-        // console.log('here');
         if (ref.instance instanceof SliderComponent) {
             const i = ref.instance as SliderComponent;
             i.value = this.rawVolumes.main;
+            i.sliderRange = [0, 124];
             i.valueChange.subscribe((value) => {
-                console.log(value);
+                this.sliderChange(value);
             })
             ref.changeDetectorRef.detectChanges();
         }
 
         if (ref.instance instanceof VolumeControlComponent) {
-            const i = ref.instance as VolumeControlComponent;
+            const i = ref.instance as VolumeControlComponent
             i.value = this.states.volume.main;
-            i.onVolumeIncrease.subscribe( () => this.increaseVolume(0) )
-            i.onVolumeDecrease.subscribe( () => this.decreaseVolume(0) )
-
+            i.onVolumeIncrease.subscribe(() => this.increaseVolume(0))
+            i.onVolumeDecrease.subscribe(() => this.decreaseVolume(0))
             ref.changeDetectorRef.detectChanges();
         }
+
+        ref.instance.done.subscribe(() => this.changeVolumeMode());
+        this.currentViewRef = ref;
     }
 
     sliderChange(evt): void {
@@ -106,29 +111,18 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.socket.send(this.getMsg('s', 0, 'lm', mode));
     }
 
-    changeVolumeMode(): void {
-        if(this.showVolumeSlider) {
+    initVolumeModeChange(): void {
+        this.showVolumeSlider = !this.showVolumeSlider;
+        this.currentViewRef.instance.prepareDestroy();
+    }
+
+    private changeVolumeMode(zone: number = 0): void {
+        if (this.showVolumeSlider) {
             this.selectedPortal = this.volumeSliderPortal;
         } else {
             this.selectedPortal = this.volumeControlPortal;
         }
 
-        this.showVolumeSlider = !this.showVolumeSlider;
-
-        // this.volumeSliderAnimState = this.showVolumeSlider ? '' : 'flipped';
-        // console.log('anim state', this.volumeSliderAnimState);
-    }
-
-    animationDone(event): void {
-        if (event.fromState === '' && event.toState == 'flip') {
-            console.log('done animating from "" => "flipped"');
-            // console.log('animation done evt', event);
-            // this.showVolumeSlider = !this.showVolumeSlider;
-            setTimeout(() => {
-                this.showVolumeSlider = !this.showVolumeSlider;
-            }, 1000)
-        }
-        console.log('animation done evt', event);
     }
 
     protected onComponentVisible(): void {
@@ -151,6 +145,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
                         this.rawVolumes = res.data.volume;
 
                         this.states.listeningMode = res.data.listeningMode;
+                        if (this.currentViewRef)
+                            this.updateCurrentViewValues();
                     }
                 }
             }
@@ -158,12 +154,29 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.addSub(s)
     }
 
+    updateCurrentViewValues(): void {
+        if (!this.currentViewRef)
+            return;
+
+        if (this.currentViewRef.instance instanceof SliderComponent) {
+            const i = this.currentViewRef.instance as SliderComponent;
+            i.value = this.rawVolumes.main;
+            this.currentViewRef.changeDetectorRef.detectChanges();
+
+        } else if (this.currentViewRef.instance instanceof VolumeControlComponent) {
+            const i = this.currentViewRef.instance as VolumeControlComponent;
+            i.value = this.states.volume.main;
+            this.currentViewRef.changeDetectorRef.detectChanges();
+        }
+
+    }
+
+
     private initStatusUpdate(): void {
-        const timerSub = timer(0, 2000)
+        const timerSub = timer(0, 5000)
             .subscribe((res) => this.getStatus())
         this.addSub(timerSub)
     }
-
 
     private getStatus(): void {
         this.socket.send({method: 'g', zone: 0, fct: 'st', value: 0})

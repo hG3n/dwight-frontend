@@ -11,6 +11,7 @@ import {SliderComponent} from './slider/slider.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { VolumeControlComponent } from './volume-control/volume-control.component';
 import {PortalModule} from "@angular/cdk/portal";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {PortalModule} from "@angular/cdk/portal";
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
         FlexLayoutModule,
         HammerModule,
-        PortalModule
+        PortalModule,
+        DragDropModule
     ],
     providers: [],
     bootstrap: [AppComponent]
